@@ -1,8 +1,7 @@
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
-
-  tags = {
-    Name = "Learning-VPC"
+  cidr_block = var.cidr_blocks
+ tags = {
+    Name = var.vpc_name
   }
 }
 
@@ -12,9 +11,7 @@ resource "aws_subnet" "public_subnets" {
   cidr_block        = element(var.public_subnet_cidrs, count.index)
   availability_zone = element(var.azs, count.index)
   map_public_ip_on_launch = true
-  tags = {
-    Name = "Public Subnet ${count.index + 1}"
-  }
+
 }
 
 resource "aws_subnet" "private_subnets" {
@@ -22,17 +19,13 @@ resource "aws_subnet" "private_subnets" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = element(var.private_subnet_cidrs, count.index)
   availability_zone = element(var.azs, count.index)
-  tags = {
-    Name = "Private Subnet ${count.index + 1}"
-  }
+
 }
 #Internet Gatewat Creation
 resource "aws_internet_gateway" "gw" {
  vpc_id = aws_vpc.main.id
 
- tags = {
-   Name = "Learning-VPC"
- }
+
 }
 
 #Creation of 2nd route table as a best practice so that 1 route table can manage internal traffic and other can provide with Internet Gateway access
@@ -44,9 +37,9 @@ resource "aws_route_table" "second_rt" {
    gateway_id = aws_internet_gateway.gw.id
  }
  
- tags = {
-   Name = "2nd Route Table"
- }
+# tags = {
+#   Name = "2nd Route Table"
+# }
 }
 
 # Associating Public Subnets to Second route table
