@@ -27,3 +27,15 @@ variable "vpc_name" {
   description = "Availability Zones"
   default     = ""
 }
+
+variable "public_subnets" {
+  description = "A list of public subnets inside the VPC"
+  type        = list(string)
+  default     = []
+}
+
+variable "vpc_id" {
+  description = "ID of VPC"
+  type        = string
+  default     = ""
+}
