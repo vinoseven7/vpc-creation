@@ -8,6 +8,6 @@ provider "aws" {
   }
 }
 
-module "vpc-creation" {
-  source = "./"
-}
+#module "vpc-creation" {
+#  source = "./"
+#}
