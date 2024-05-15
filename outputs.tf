@@ -10,7 +10,7 @@ output "public_subnets" {
 
 output "private_subnets" {
   description = "The ID of the VPC"
-  value       = ws_subnet.private_subnets[*].ids
+  value       = aws_subnet.private_subnets[*].ids
 }
 
 
