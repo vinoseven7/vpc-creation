@@ -7,3 +7,6 @@ provider "aws" {
     }
   }
 }
+
+module "vpc-creation" {
+  source = "./vpc-creation"
